@@ -188,7 +188,7 @@ class NeoValid(pl.LightningModule):
         preds = torch.stack(preds)
         labels = torch.stack(labels)
 
-        score = accuracy(preds, labels, ignore_index=-100)
+        score = accuracy(preds, labels, task='multiclass', ignore_index=-100)
         self.log(
             f'{dataset_name}/acc',
             score,
@@ -597,7 +597,7 @@ class NeoValid(pl.LightningModule):
             sync_dist=True)
 
     # Reduce results from gpus to a single dataframe + determine early stopping
-    def validation_epoch_end(self, output):
+    def on_validation_epoch_end(self, output):
         if self.hparams.mode in ['unlearn']:
             if self.init_validation:
                 log_col_name = 'init'

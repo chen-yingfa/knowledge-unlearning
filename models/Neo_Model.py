@@ -4,7 +4,7 @@ from torch.utils.data import RandomSampler, DataLoader
 import torch.nn.functional as F
 import pytorch_lightning as pl
 from torchmetrics.functional import accuracy
-import deepspeed
+# import deepspeed
 import pandas as pd
 from collections import Counter
 import re
@@ -595,7 +595,7 @@ class Neo(pl.LightningModule):
             sync_dist=True)
 
     # Reduce results from gpus to a single dataframe + determine early stopping
-    def validation_epoch_end(self, output):
+    def on_validation_epoch_end(self, output):
         if self.hparams.mode in ['unlearn']:
             if self.init_validation:
                 log_col_name = 'init'

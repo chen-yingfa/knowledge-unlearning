@@ -622,7 +622,7 @@ class NeoDP(pl.LightningModule):
             sync_dist=True)
 
     # Reduce results from gpus to a single dataframe + determine early stopping
-    def validation_epoch_end(self, output):
+    def on_validation_epoch_end(self, output):
         if self.hparams.mode in ['unlearn']:
             if self.init_validation:
                 log_col_name = 'init'
